@@ -1,5 +1,5 @@
 
-var registerUrl = "/node/register";
+var registerUrl = "/register";
 var connectUrl = "/node/connect"
 
 var webSocket;
@@ -16,8 +16,10 @@ function jsonCallback() {
 }
 
 function register() {
+	alert('calling register');
 	$.get(registerUrl, function(data) {
 		nodeId = data.nodeId;
+		alert('session is ' + nodeId);
 	});
 }
 

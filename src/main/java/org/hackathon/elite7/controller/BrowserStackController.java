@@ -1,5 +1,13 @@
 package org.hackathon.elite7.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.hackathon.elite7.service.TrackerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,9 +15,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BrowserStackController {
 
    
-    @RequestMapping("/register")
-    public String register() {
-        return "Greetings from Spring Boot!";
+	@Autowired
+	private TrackerService tracker;
+	
+    @RequestMapping(value = "/register")
+    public Map register
+            (HttpServletRequest request) 
+   {
+     HttpSession session = request.getSession();
+     String id = session.getId();
+     tracker.register(id);
+     
+     Map<String, String> responseMap =  new HashMap<String, String>();
+     responseMap.put("nodeId", id);
+     return responseMap;
     }
     
 
