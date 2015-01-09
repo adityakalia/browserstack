@@ -1,8 +1,8 @@
 
 var registerUrl = "/register";
 var submitUrl = "/submit";
-var gettaskUrl = "/gettask";
-var taskResponseUrl = "/taskresponse";
+var gettaskUrl = "/getTask";
+var taskResponseUrl = "/taskResponse";
 
 var nodeId;
 var jobId;
@@ -25,7 +25,7 @@ function poll() {
     log("Polling tasks...");
     setTimeout(function(){
         $.get(gettaskUrl, function(task) {
-            if(task != null) {
+            if(task.jobId) {
                 onTaskReceived(task);
             }
         });
@@ -40,18 +40,16 @@ function onTaskReceived(task) {
 	sequence = task.sequence;
 	log("Task received: " + task);
 
-	var dynamicScript = '<script type="text/javascript">' + 'var data = ' + data + '";' + script + '</script>';
+	var dynamicScript =  'var data = ' + data + ';' + script;
 	eval(dynamicScript);
 }
 
-function sendRespone(response) {
+function sendResponse(response) {
     var data =  {
-        'nodeId': nodeId,
         'jobId': jobId,
         'sequence': sequence,
         'response': response
     };
-
     $.ajax({
             type: "POST",
             url: taskResponseUrl,

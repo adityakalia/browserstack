@@ -28,5 +28,11 @@ public class TrackerService {
 		}
 		return availableNodes;
 	}
+	
+	public void setBusy(String nodeId) {
+		if (nodeMap.containsKey(nodeId))
+			nodeMap.put(nodeId, NodeStatus.UNAVAILABLE);
+	}
+	
 
 }
