@@ -19,6 +19,12 @@ body {
     font-family: monospace;
 }
 
+.console {
+    font-family: monospace;
+    font-size: 15px;
+    background-color: gray;
+}
+
 .container > img {
     margin: 40px auto;
 }

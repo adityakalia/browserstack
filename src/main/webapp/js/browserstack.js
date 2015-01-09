@@ -7,7 +7,9 @@ var nodeId ;
 var host = 'ws://' + location.host;
 
 function boot() {
+	log("Registering client...");
 	register();
+	log("Establishing web socket connection...");
     connect();
 }
 
@@ -16,10 +18,9 @@ function jsonCallback() {
 }
 
 function register() {
-	alert('calling register');
 	$.get(registerUrl, function(data) {
 		nodeId = data.nodeId;
-		alert('session is ' + nodeId);
+		log("Node registration id: " + nodeId);
 	});
 }
 
@@ -31,6 +32,7 @@ function connect() {
 
 function onMessage(data) {
 	var eventType = data.eventType;
+	log("Received message for event type: " + eventType);
 	switch(eventType) {
     	case "SubmitTask":
     		onSubmitTask(data.payload);
@@ -45,6 +47,15 @@ function onSubmitTask(payload) {
 
 function onClose(data) {
 
+}
+
+function log(message) {
+	$('textarea[name="console"').append("\n");
+	$('textarea[name="console"').append(message);
+}
+
+function clearConsole() {
+	$('textarea[name="console"]').val('');
 }
 
 
