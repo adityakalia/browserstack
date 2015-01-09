@@ -1,21 +1,17 @@
 
 var registerUrl = "/register";
-var connectUrl = "/connect";
 var submitUrl = "/submit";
+var gettaskUrl = "/gettask";
+var taskResponseUrl = "/taskresponse";
 
-var webSocket;
-var nodeId ;
-var host = 'ws://' + location.host;
+var nodeId;
+var jobId;
+var sequence;
 
 function boot() {
 	log("Registering client...");
 	register();
-	log("Establishing web socket connection...");
-    connect();
-}
-
-function jsonCallback() {
-
+	poll();
 }
 
 function register() {
@@ -25,29 +21,44 @@ function register() {
 	});
 }
 
-function connect() {
-   webSocket = new WebSocket(host + connectUrl);
-   webSocket.onmessage = onMessage;
-   webSocket.onclose = onClose;
+function poll() {
+    log("Polling tasks...");
+    setTimeout(function(){
+        $.get(gettaskUrl, function(task) {
+            if(task != null) {
+                onTaskReceived(task);
+            }
+        });
+        poll();
+    }, 3000);
 }
 
-function onMessage(data) {
-	var eventType = data.eventType;
-	log("Received message for event type: " + eventType);
-	switch(eventType) {
-    	case "SubmitTask":
-    		onSubmitTask(data.payload);
-        	break;
+function onTaskReceived(task) {
+	var script = task.script;
+	var data = task.data;
+	jobId = task.jobId;
+	sequence = task.sequence;
+	log("Task received: " + task);
 
-    }
+	var dynamicScript = '<script type="text/javascript">' + 'var data = ' + data + '";' + script + '</script>';
+	eval(dynamicScript);
 }
 
-function onSubmitTask(payload) {
-	
-}
+function sendRespone(response) {
+    var data =  {
+        'nodeId': nodeId,
+        'jobId': jobId,
+        'sequence': sequence,
+        'response': response
+    };
 
-function onClose(data) {
-
+    $.ajax({
+            type: "POST",
+            url: taskResponseUrl,
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+        });
 }
 
 function log(message) {
@@ -71,7 +82,7 @@ function submitTask() {
         url: submitUrl,
         data: JSON.stringify(data),
         dataType: 'json',
-        contentType: 'application/json; charset=utf-8',
+        contentType: 'application/json; charset=utf-8'
     });
 }
 
