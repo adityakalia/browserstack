@@ -1,6 +1,7 @@
 
 var registerUrl = "/register";
-var connectUrl = "/node/connect"
+var connectUrl = "/connect";
+var submitUrl = "/submit";
 
 var webSocket;
 var nodeId ;
@@ -56,6 +57,22 @@ function log(message) {
 
 function clearConsole() {
 	$('textarea[name="console"]').val('');
+}
+
+function submitTask() {
+	var data = {
+        'name': $('input[name="jobName"').val(),
+        'mapperScript': $('textarea[name="taskcode"').val(),
+        'reducerScript': $('textarea[name="reducecode"').val(),
+        'data': $('textarea[name="inputdata"').val()
+    };
+    $.ajax({
+        type: "POST",
+        url: submitUrl,
+        data: JSON.stringify(data),
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+    });
 }
 
 

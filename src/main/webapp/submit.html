@@ -8,7 +8,7 @@
         <div class="container centered">
             <h1 class="title">Browser Stack Master!</h1>
         </div>
-        <form method="post" action="/node/submit">
+        <form>
             <div class="label">
                 <table>
                     <tr>
@@ -41,11 +41,13 @@
 
                     <tr>
                         <td class="centered" colspan="2">
-                            <input type="submit" value="Submit">
+                            <button type="button" onclick="javascript:submitTask();">Submit Task</button>
                         </td>
                     </tr>
                 </table>
             </div>
         </form>
     </body>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <script src="js/browserstack.js"></script>
 </html>
