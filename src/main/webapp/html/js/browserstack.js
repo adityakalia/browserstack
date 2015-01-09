@@ -8,6 +8,7 @@ var nodeId;
 var jobId;
 var sequence;
 
+
 function boot() {
 	log("Registering client...");
 	register();
@@ -60,12 +61,12 @@ function sendResponse(response) {
 }
 
 function log(message) {
-	$('textarea[name="console"').append("\n");
 	$('textarea[name="console"').append(message);
+	$('textarea[name="console"').append("\n");
 }
 
 function clearConsole() {
-	$('textarea[name="console"]').val('');
+	$('textarea[name="console"]').text('');
 }
 
 function submitTask() {

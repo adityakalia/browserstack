@@ -4,7 +4,7 @@
         <title>Browser Stack!</title>
         <link rel="stylesheet" href="css/styles.css">
     </head>
-    <body>
+    <body background="image/background.jpg">
         <div class="container centered">
             <h1 class="title">Browser Stack Master!</h1>
         </div>
@@ -14,34 +14,34 @@
                     <tr>
                         <td>Job Name</td>
                         <td>
-                            <input type=text name="jobName">
+                            <input type=text name="jobName" class="console">
                         </td>
                     </tr>
 
                     <tr>
                         <td>Mapper Code</td>
                         <td>
-                            <textarea rows="10" cols="160" name="taskcode"></textarea>
+                            <textarea rows="8" cols="130" name="taskcode" class="console"></textarea>
                         </td>
                     </tr>
 
                     <tr>
                         <td>Reducer Code</td>
                         <td>
-                            <textarea rows="10" cols="160" name="reducecode"></textarea>
+                            <textarea rows="8" cols="130" name="reducecode" class="console"></textarea>
                         </td>
                     </tr>
 
                     <tr>
                         <td>Input Data</td>
                         <td>
-                            <textarea rows="10" cols="160" name="inputdata"></textarea>
+                            <textarea rows="8" cols="130" name="inputdata" class="console"></textarea>
                         </td>
                     </tr>
 
                     <tr>
                         <td class="centered" colspan="2">
-                            <button type="button" onclick="javascript:submitTask();">Submit Task</button>
+                            <button class="button" type="button" onclick="javascript:submitTask();">Submit Task</button>
                         </td>
                     </tr>
                 </table>
