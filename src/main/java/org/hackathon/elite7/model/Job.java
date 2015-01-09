@@ -9,6 +9,10 @@ public class Job {
 	String name;
 	String data;
 	
+	public Job() {
+		
+	}
+	
 	public Job(String mapperScript, String reducerScript, String id,
 			String name, String data) {
 		super();

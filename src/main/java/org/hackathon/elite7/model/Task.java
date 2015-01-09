@@ -6,13 +6,23 @@ public class Task {
 	String jobId;
 	int sequence;
 	String script;
-	String data;
-	public Task(String jobId, int sequence, String script, String data) {
+	String[] data;
+	public Task(String jobId, int sequence, String script, String data[]) {
 		super();
 		this.jobId = jobId;
 		this.sequence = sequence;
 		this.script = script;
 		this.data = data;
+		
+		System.out.println("=======================================");
+		System.out.println("JOB ID " + jobId);
+		System.out.println("SEQUENCE " + sequence);
+		System.out.println("SCRIPT " + script);
+		System.out.println("DATA ");
+		for (String d: data) {
+			System.out.println(d);
+		}
+		System.out.println("=======================================");
 	}
 	public String getJobId() {
 		return jobId;
@@ -32,10 +42,10 @@ public class Task {
 	public void setScript(String script) {
 		this.script = script;
 	}
-	public String getData() {
+	public String[] getData() {
 		return data;
 	}
-	public void setData(String data) {
+	public void setData(String[] data) {
 		this.data = data;
 	}
 	@Override
