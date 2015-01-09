@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Browser Stack!</title>
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+    <body>
+        <div class="container centered">
+            <h1 class="title">Browser Stack Master!</h1>
+        </div>
+        <form method="post" action="/node/submit">
+            <div class="label">
+                <table>
+                    <tr>
+                        <td>Task Code</td>
+                        <td>
+                            <textarea rows="10" cols="160" name="taskcode">
+                            </textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Input Data</td>
+                        <td>
+                            <textarea rows="10" cols="160" name="inputdata">
+                            </textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Reduce Code</td>
+                        <td>
+                            <textarea rows="10" cols="160" name="reducecode">
+                            </textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="centered" colspan="2">
+                            <input type="submit" value="Submit">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </form>
+    </body>
+</html>
