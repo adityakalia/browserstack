@@ -55,8 +55,6 @@ public class BrowserStackController {
 	@RequestMapping(value = "/taskResponse", method=RequestMethod.POST)
 	public void taskResponse(@RequestBody TaskResponse taskResponse) {
 		System.out.println("RESPONSE RECEIVED FOR JOB " + taskResponse.getJobId());
-		System.out.println("RESPONSE " + taskResponse.getResponse());
-
 		engine.processTaskResponse(taskResponse);
 	}
 }
