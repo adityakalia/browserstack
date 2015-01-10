@@ -7,13 +7,11 @@ function init() {
 }
 
 function loadDataFromURL() {
-	var data = [ 'cloud', 'trends', 'hello' ];
-	var URL = "http://www.html5rocks.com/en/search?q=";
-	/*
-	 * for (var i = 0; i < data.length; i++) {
-	 * console.log("========finding="+data[i]); fetchDataViaHttp(URL+data[i]); }
-	 */
-	fetchDataViaHttp(URL + data[0]);
+	var urlList = ["http://www.html5rocks.com/", "http://www.google.com",  "http://www.rediff.com"];
+	
+       for (var i = 0; i < urlList.length; i++) {
+	  fetchDataViaHttp(urlList[i]); 
+	}
 }
 
 function fetchDataViaHttp(Url) {

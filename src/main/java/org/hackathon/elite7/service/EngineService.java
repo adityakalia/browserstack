@@ -21,6 +21,7 @@ public class EngineService {
 	private List<TaskResponse> taskResponseList = new ArrayList<TaskResponse>();
 	private int currentTaskSize;
 	private String result;
+	private volatile Long startTime;
 
 	public void pushJob(Job job) {
 		// Clears the old response
@@ -48,6 +49,8 @@ public class EngineService {
 	}
 
 	public Task getTask() {
+		if (startTime ==  null)
+			startTime = System.currentTimeMillis();
 		Task t = null;
 		if (!taskQueue.isEmpty())
 			t = taskQueue.poll();
@@ -59,6 +62,8 @@ public class EngineService {
 		if (taskResponseList.size() >= this.currentTaskSize) {
 			aggregateTaskResponses(this.taskResponseList);
 			taskResponseList.clear();
+			System.out.println("JOB PROCESSING TIME " + (System.currentTimeMillis() - startTime));
+			System.out.println("JOB PROCESSING TIME IN SEC " + (System.currentTimeMillis() - startTime)/1000);
 		}
 	}
 
@@ -71,9 +76,6 @@ public class EngineService {
 				pairList.add(new Pair(entry.getKey(), entry.getValue()));
 				
 		Collections.sort(pairList);
-		for (Pair p : pairList)
-			System.out.println(p.getKey() + " = " + p.getValue());
-
 		Object process = jsService.process(currentJob.getReducerScript(), pairList);
 		result = process == null ? "No result received" : String.valueOf(process);
 	}
