@@ -23,7 +23,6 @@ function register() {
 }
 
 function poll() {
-    log("Polling tasks...");
     setTimeout(function(){
         $.get(gettaskUrl, function(task) {
             if(task.jobId) {
@@ -39,10 +38,12 @@ function onTaskReceived(task) {
 	var data = task.data;
 	jobId = task.jobId;
 	sequence = task.sequence;
-	log("Task received: " + task);
+	log("Task received: " + JSON.stringify(task));
 
+    log("Task execution started...");
 	var dynamicScript =  'var data = ' + data + ';' + script;
 	eval(dynamicScript);
+	log("Task execution completed...");
 }
 
 function sendResponse(response) {
