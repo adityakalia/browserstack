@@ -38,7 +38,7 @@ function onTaskReceived(task) {
 	var data = task.data;
 	jobId = task.jobId;
 	sequence = task.sequence;
-	log("Task received: " + JSON.stringify(task));
+	log("Task received: {JobID: " + task.jobId + ", Sequence: " + task.sequence + "}.");
 
     log("Task execution started...");
 	var dynamicScript =  'var data = ' + data + ';' + script;
@@ -62,7 +62,7 @@ function sendResponse(response) {
 }
 
 function log(message) {
-	$('textarea[name="console"').append(message);
+	$('textarea[name="console"').append("[" + formatDate(new Date()) + "] " + message);
 	$('textarea[name="console"').append("\n");
 }
 
@@ -86,5 +86,14 @@ function submitTask() {
     });
 }
 
-
+function formatDate(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear() + " " + strTime;
+}
 
