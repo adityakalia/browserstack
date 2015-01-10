@@ -3,16 +3,17 @@
  var finalResult = new Object();
  init();
 function init(){
-    console.log("Starting...")
+    console.log("Starting...");
     loadDataFromURL();
 }
 
 function loadDataFromURL(){
-   // var data = ['http://news.google.co.in/', 'http://www.html5rocks.com/en/search?q=cloud', 'http://en.wikipedia.org/wiki/Cloud_computing','http://www.informationweek.in/category/cloud-computing','http://en.wikipedia.org/wiki/Open_source'];
+
       for (var i = 0; i < data.length; i++) {
       console.log("========finding="+data[i]);
       fetchDataViaHttp(data[i]);
     }
+sendResponse(finalResult);
    // fetchDataViaHttp(URL);
 }
 
@@ -75,6 +76,6 @@ function storeInMap(data){
 
      }
       console.log("Map Size:"+resultDataMap.size);
-      sendResponse(finalResult);
+      
     // return resultDataMap;
 }

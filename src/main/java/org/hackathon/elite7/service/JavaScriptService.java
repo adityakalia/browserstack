@@ -1,6 +1,6 @@
 package org.hackathon.elite7.service;
 
-import jdk.nashorn.api.scripting.ScriptObjectMirror;
+//import jdk.nashorn.api.scripting.ScriptObjectMirror;
 import org.hackathon.elite7.model.Pair;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,9 @@ public class JavaScriptService {
 		script = "(function() {" + this.generateData(pairList) + script + "}())";
 		System.out.println("EXECUTING REDUCER SCRIPT...");
 		try {
-			Object obj = engine.eval(script);
+			String obj = (String)engine.eval(script);
+			if (obj.length() > 100) 
+				obj = obj.substring(0, 100) + "....";
 			System.out.println("EXECUTION RESPONSE " + obj);
 			return obj;
 		} catch (ScriptException e) {
@@ -43,24 +45,24 @@ public class JavaScriptService {
 		return str + "];";
 	}
 
-	public static void main(String[] args) {
-		JavaScriptService service = new JavaScriptService();
-		List<Pair> pairs = new ArrayList<Pair>(){{
-			add(new Pair("show", "34"));
-			add(new Pair("show", "34"));
-			add(new Pair("hide", "34"));
-			add(new Pair("hide", "34"));
-		}};
-		String script = "var keyes = []; var values = [];"
-			+ "for (i = 0; i < responseData.length; i++) { "
-			+ " var pair = responseData[i];"
-			+ "var index = keyes.indexOf(pair.key);"
-			+ " if(index >=0) { values[index] += pair.value; }"
-		    + " else { keyes.push(pair.key); values.push(pair.value);}"
-			+ "}"
-			+ "return keyes;";
-
-		ScriptObjectMirror result = (ScriptObjectMirror) service.process(script, pairs);
-		System.out.println(result.getSlot(1));
-	}
+//	public static void main(String[] args) {
+//		JavaScriptService service = new JavaScriptService();
+//		List<Pair> pairs = new ArrayList<Pair>(){{
+//			add(new Pair("show", "34"));
+//			add(new Pair("show", "34"));
+//			add(new Pair("hide", "34"));
+//			add(new Pair("hide", "34"));
+//		}};
+//		String script = "var keyes = []; var values = [];"
+//			+ "for (i = 0; i < responseData.length; i++) { "
+//			+ " var pair = responseData[i];"
+//			+ "var index = keyes.indexOf(pair.key);"
+//			+ " if(index >=0) { values[index] += pair.value; }"
+//		    + " else { keyes.push(pair.key); values.push(pair.value);}"
+//			+ "}"
+//			+ "return keyes;";
+//
+//		ScriptObjectMirror result = (ScriptObjectMirror) service.process(script, pairs);
+//		System.out.println(result.getSlot(1));
+//	}
 }

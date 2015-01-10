@@ -25,6 +25,7 @@ public class EngineService {
 	private Queue<Task> taskQueue = new LinkedList<Task>();
 	private List<TaskResponse> taskResponseList = new ArrayList<TaskResponse>();
 	private int currentTaskSize;
+	private volatile Long startTime;
 
 	public void pushJob(Job job) {
 		UUID jobId = UUID.randomUUID();
@@ -44,6 +45,8 @@ public class EngineService {
 	}
 
 	public Task getTask() {
+		if (startTime ==  null)
+			startTime = System.currentTimeMillis();
 		Task t = null;
 		if (!taskQueue.isEmpty())
 			t = taskQueue.poll();
@@ -54,6 +57,9 @@ public class EngineService {
 		taskResponseList.add(taskResponse);
 		if (taskResponseList.size() == this.currentTaskSize) {
 			aggregateTaskResponses(this.taskResponseList);
+			System.out.println("JOB PROCESSING TIME " + (System.currentTimeMillis() - startTime));
+			System.out.println("JOB PROCESSING TIME IN SEC " + (System.currentTimeMillis() - startTime)/1000);
+
 		}
 	}
 
@@ -66,8 +72,8 @@ public class EngineService {
 				pairList.add(new Pair(entry.getKey(), entry.getValue()));
 				
 		Collections.sort(pairList);
-		for (Pair p : pairList)
-			System.out.println(p.getKey() + " = " + p.getValue());
+		//for (Pair p : pairList)
+			//System.out.println(p.getKey() + " = " + p.getValue());
 		
 		jsService.process(currentJob.getReducerScript(), pairList);
 	}
