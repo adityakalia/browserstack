@@ -1,3 +1,7 @@
+Case Run two nodes.
+-------------------
+
+Mapper Code:
 
  var resultDataMap = new Map();
  var finalResult = new Object();
@@ -28,6 +32,7 @@ function fetchDataViaHttp(Url){
     else
       req = new ActiveXObject("Microsoft.XMLHTTP");
 
+    alert(Url);
     req.open('GET', Url, false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
    // req.setRequestHeader('Access-Control-Allow-Origin', '*');
@@ -76,6 +81,27 @@ function storeInMap(data){
 
      }
       console.log("Map Size:"+resultDataMap.size);
-      
+
     // return resultDataMap;
 }
+
+
+Reducer Code:
+
+var keyes = []; var values = []; var result = '';
+			 for (i = 0; i < responseData.length; i++) {
+			  var pair = responseData[i];
+			 var index = keyes.indexOf(pair.key);
+			  if(index >=0) { values[index] += pair.value; }
+		      else { keyes.push(pair.key); values.push(pair.value);}
+			 }
+			 for (i = 0; i < keyes.length; i++) {
+			 result = result + ' ' + keyes[i]  + ':' + values[i] ;
+			 }
+			 return result;
+
+
+Data:
+
+['http://en.wikipedia.org/wiki/Open_source']
+['http://www.html5rocks.com/en/search?q=cloud']
