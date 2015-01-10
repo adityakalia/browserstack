@@ -1,12 +1,12 @@
 package org.hackathon.elite7.service;
 
+import org.hackathon.elite7.model.NodeStatus;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.hackathon.elite7.model.NodeStatus;
-import org.springframework.stereotype.Service;
 
 @Service
 public class TrackerService {
@@ -14,7 +14,9 @@ public class TrackerService {
 	private Map<String, NodeStatus> nodeMap = new HashMap<String, NodeStatus>();
 
 	public void register(String id) {
-		System.out.println("NODE REGISTTERED " + id);
+		if(!nodeMap.containsKey(id)) {
+			System.out.println("NODE REGISTTERED " + id);
+		}
 		nodeMap.put(id, NodeStatus.AVAILABLE);
 	}
 
@@ -33,6 +35,9 @@ public class TrackerService {
 		if (nodeMap.containsKey(nodeId))
 			nodeMap.put(nodeId, NodeStatus.UNAVAILABLE);
 	}
-	
 
+	public void setAvailable(String nodeId) {
+		if (nodeMap.containsKey(nodeId))
+			nodeMap.put(nodeId, NodeStatus.AVAILABLE);
+	}
 }

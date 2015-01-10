@@ -1,18 +1,23 @@
 
 var registerUrl = "/register";
 var submitUrl = "/submit";
-var gettaskUrl = "/getTask";
+var getTaskUrl = "/getTask";
 var taskResponseUrl = "/taskResponse";
+var getResultUrl = "/getResult";
 
 var nodeId;
 var jobId;
 var sequence;
 
 
-function boot() {
+function bootAsNode() {
 	log("Registering client...");
 	register();
-	poll();
+	pollTask();
+}
+
+function bootAsMaster() {
+	pollResult();
 }
 
 function register() {
@@ -22,14 +27,26 @@ function register() {
 	});
 }
 
-function poll() {
+function pollTask() {
     setTimeout(function(){
-        $.get(gettaskUrl, function(task) {
+        $.get(getTaskUrl, function(task) {
             if(task.jobId) {
                 onTaskReceived(task);
             }
         });
-        poll();
+        pollTask();
+    }, 3000);
+}
+
+function pollResult() {
+    setTimeout(function(){
+        $.get(getResultUrl, function(result) {
+            $('textarea[name="result"]').text('');
+            if(result) {
+                $('textarea[name="result"]').text(result);
+            }
+        });
+        pollResult();
     }, 3000);
 }
 
@@ -44,6 +61,8 @@ function onTaskReceived(task) {
 	var dynamicScript =  'var data = ' + data + ';' + script;
 	eval(dynamicScript);
 	log("Task execution completed...");
+	// To make node available
+	register();
 }
 
 function sendResponse(response) {
