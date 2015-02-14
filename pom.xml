@@ -17,7 +17,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<start-class>org.hackathon.elite7.main.Application</start-class>
+		<start-class> org.hackathon.elite7.main.Application</start-class>
 	</properties>
 	<build>
 		<plugins>
